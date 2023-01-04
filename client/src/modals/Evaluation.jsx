@@ -12,20 +12,17 @@ import { ApiUrl } from '../constants/ApiUrl';
 
 const Evaluation = ({ getRecruitedData, selectedList, setVisible }) => {
   const matchingPostsId = selectedList.matchingPostsId;
-  const userId = selectedList.userId;
+  const evaluatorId = selectedList.userId;
   const [evalRes, setEvalRes] = useImmer([]);
   const getMembers = async () => {
     try {
       const res = await get(ApiUrl.RECRUIT_TEAM_INFO, matchingPostsId);
-      const team = [];
-      res.map((member) => {
-        team.push({
-          nickName: member['nickName'],
-          evaluateTargetId: member['userId'],
-          evaluatorId: userId,
-          profileImg: member['profileImg'],
-        });
-      });
+      const team = res.map(({ nickName, userId, profileImg }) => ({
+        nickName,
+        evaluateTargetId: userId,
+        evaluatorId,
+        profileImg,
+      }));
       setEvalRes(team);
     } catch (err) {
       console.log(err);

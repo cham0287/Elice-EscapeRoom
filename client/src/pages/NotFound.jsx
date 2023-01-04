@@ -19,7 +19,7 @@ const Notfound = () => {
           key={snow.length}
         />,
       ]);
-    }, 1);
+    }, 20);
     return () => clearInterval(letItSnow);
   }, [snow]);
   return (
